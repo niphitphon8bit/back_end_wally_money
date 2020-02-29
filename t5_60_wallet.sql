@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 29, 2020 at 09:47 AM
+-- Generation Time: Feb 29, 2020 at 12:00 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -30,10 +30,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `t5w_account` (
   `ac_id` int(11) NOT NULL COMMENT 'pk for account',
-  `ac_fname` int(255) NOT NULL COMMENT 'frist name user',
-  `ac_lname` int(255) NOT NULL COMMENT 'last name user',
+  `ac_fname` varchar(255) NOT NULL COMMENT 'frist name user',
+  `ac_lname` varchar(255) NOT NULL COMMENT 'last name user',
   `ac_max_cost` int(11) NOT NULL COMMENT 'max cost'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `t5w_account`
+--
+
+INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_max_cost`) VALUES
+(2, '0', '0', 1000),
+(3, '0', '0', 1000),
+(4, '0', '0', 1000),
+(5, 'er', '0', 100044),
+(6, 'test', ' tset', 100044);
 
 -- --------------------------------------------------------
 
@@ -112,7 +123,7 @@ ALTER TABLE `t5w_transaction_type`
 -- AUTO_INCREMENT for table `t5w_account`
 --
 ALTER TABLE `t5w_account`
-  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account';
+  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `t5w_record`
