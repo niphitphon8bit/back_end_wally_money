@@ -1,5 +1,4 @@
 Node.js RESTFUL API
-============================
 database
 - ใช้ database เป็น mysql โดยใช้ xampp เป็น server database
 1. ติดตั้ง XAMPP
@@ -15,7 +14,6 @@ database
  - กด import
  - เลือกไฟล์ t5_60_wallet.sql
  - กด Go
-============================
 node.js
 1. ติดตั้ง nodemon 
  - npm install nodemon --save
@@ -27,4 +25,3 @@ node.js
  - npm install mysql --save
 5. จากนั้นทำการ run โดยใช้คำสั่ง
  - nodemon ./
-============================
