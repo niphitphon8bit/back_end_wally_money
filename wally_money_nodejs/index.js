@@ -69,7 +69,7 @@ app.put('/account_update/:id', (req, res) => {
     })
     //end dev
 
-// record
+// record by Yodsapat
 app.get('/record', (req, res) => {
     let sql = 'SELECT * FROM t5w_record;'
     let query = db.query(sql, (err, results) => {
