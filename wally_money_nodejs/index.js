@@ -78,6 +78,14 @@ app.get('/record', (req, res) => {
     })
 })
 
+app.get('/record/:id', (req, res) => {
+    let sql = `SELECT * FROM t5w_record WHERE rc_id = ${req.params.id};`
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
 app.post('/record_insert/', (req, res) => {
     let sql = `INSERT INTO t5w_record(rc_balance, rc_ac_id) 
     VALUES (${req.body.rc_balance}, ${req.body.rc_ac_id});`;
