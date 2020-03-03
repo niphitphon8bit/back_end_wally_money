@@ -68,3 +68,40 @@ app.put('/account_update/:id', (req, res) => {
         })
     })
     //end dev
+
+    // record
+app.get('/record', (req, res) => {
+    let sql = 'SELECT * FROM t5w_record;'
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err
+        res.json(results)
+    })
+})
+
+app.post('/record_insert/', (req, res) => {
+    let sql = `INSERT INTO t5w_record(rc_balance, rc_ac_id, rc_date) 
+    VALUES (${req.body.rc_balance}, ${req.body.rc_ac_id}, "${req.body.rc_date}");`;
+
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+app.delete('/record_delete/:id', (req, res) => {
+    let sql = `DELETE FROM t5w_record WHERE rc_id = ${req.params.id};`
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+
+app.put('/record_update/:id', (req, res) => {
+        let sql = `UPDATE t5w_record SET rc_balance = ${req.body.rc_balance}, rc_ac_id = ${req.body.rc_ac_id}, rc_date = "${req.body.rc_date}"  WHERE rc_id = ${req.params.id}  ;`;
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
+    })
+    //end dev
