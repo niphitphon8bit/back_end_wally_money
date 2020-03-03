@@ -105,3 +105,47 @@ app.put('/record_update/:id', (req, res) => {
         })
     })
     //end dev
+
+    // Transaction by Thutsaneeya
+app.get('/transaction_type', (req, res) => {
+    let sql = 'SELECT * FROM t5w_transaction_type;'
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err
+        res.json(results)
+    })
+})
+app.get('/transaction_type_by_key/:id', (req, res) => {
+    let sql = `SELECT * FROM t5w_transaction_type WHERE type_id =  ${req.params.id};`
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err
+        res.json(results)
+    })
+})
+
+app.post('/transaction_type_insert/', (req, res) => {
+    let sql = `INSERT INTO t5w_transaction_type(type_name) 
+    VALUES ("${req.body.type_name}");`;
+
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+app.delete('/transaction_type_delete/:id', (req, res) => {
+    let sql = `DELETE FROM t5w_transaction_type WHERE type_id = ${req.params.id};`
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+
+app.put('/transaction_type_update/:id', (req, res) => {
+        let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
+    })
+    //end dev
