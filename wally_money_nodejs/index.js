@@ -157,3 +157,54 @@ app.put('/transaction_type_update/:id', (req, res) => {
         })
     })
     //end dev
+
+        // Transaction by Thutsaneeya
+app.get('/transaction', (req, res) => {
+    let sql = 'SELECT * FROM t5w_transaction;'
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err
+        res.json(results)
+    })
+})
+app.get('/transaction_by_key/:id', (req, res) => {
+    let sql = `SELECT * FROM t5w_transaction WHERE ts_id =  ${req.params.id};`
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err
+        res.json(results)
+    })
+})
+
+app.post('/transaction_insert/', (req, res) => {
+    let sql = `INSERT INTO t5w_transaction(ts_name,ts_cost,ts_date,ts_detail,ts_category,ts_rc_id,ts_type_id) 
+    VALUES ("${req.body.ts_name}","${req.body.ts_cost}","${req.body.ts_date}","${req.body.ts_detail}","${req.body.ts_category}",${req.body.ts_rc_id},${req.body.ts_type_id});`;
+
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+app.delete('/transaction_delete/:id', (req, res) => {
+    let sql = `DELETE FROM t5w_transaction WHERE ts_id = ${req.params.id};`
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+
+app.put('/transaction_update/:id', (req, res) => {
+        let sql = `UPDATE t5w_transaction SET ts_name = "${req.body.ts_name}",
+                                                ts_cost = ${req.body.ts_cost},
+                                                ts_date = "${req.body.ts_date}",
+                                                ts_detail = "${req.body.ts_detail}",
+                                                ts_category ="${req.body.ts_category}",
+                                                ts_rc_id = ${req.body.ts_rc_id},
+                                                ts_type_id  = ${req.body.ts_type_id} where ts_id = ${req.params.id}`;
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
+    })
+    //end dev
+
