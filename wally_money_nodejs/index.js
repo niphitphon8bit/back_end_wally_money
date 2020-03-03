@@ -98,7 +98,7 @@ app.delete('/record_delete/:id', (req, res) => {
 
 
 app.put('/record_update/:id', (req, res) => {
-        let sql = `UPDATE t5w_record SET rc_balance = ${req.body.rc_balance}, rc_ac_id = ${req.body.rc_ac_id}  WHERE rc_id = ${req.params.id}  ;`;
+        let sql = `UPDATE t5w_record SET rc_balance = ${req.body.rc_balance}, rc_ac_id = ${req.body.rc_ac_id}, rc_date = "${new Date().toLocaleString("en-US", {timeZone: "Asia/Shanghai"})}" WHERE rc_id = ${req.params.id}  ;`;
         let query = db.query(sql, (err, result) => {
             if (err) throw err
             res.json(result)
