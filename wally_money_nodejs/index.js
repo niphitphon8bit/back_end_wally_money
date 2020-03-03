@@ -32,7 +32,7 @@ db.connect((err) => {
 app.listen(3000, () => {
     console.log('Start server at port 3000.');
 });
-// account
+// account by Noppadol Chansuk 
 app.get('/account', (req, res) => {
     let sql = 'SELECT * FROM t5w_account;'
     let query = db.query(sql, (err, results) => {
@@ -69,7 +69,7 @@ app.put('/account_update/:id', (req, res) => {
     })
     //end dev
 
-    // record
+// record by Yodsapat
 app.get('/record', (req, res) => {
     let sql = 'SELECT * FROM t5w_record;'
     let query = db.query(sql, (err, results) => {
