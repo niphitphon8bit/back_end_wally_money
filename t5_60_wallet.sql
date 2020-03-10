@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2020 at 04:01 PM
+-- Generation Time: Mar 10, 2020 at 04:08 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -60,7 +60,7 @@ CREATE TABLE `t5w_transaction` (
   `ts_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp() COMMENT 'date on day for transaction ',
   `ts_detail` varchar(255) NOT NULL COMMENT 'transaction  detail',
   `ts_category` varchar(2) NOT NULL COMMENT 'transaction  category',
-  `ts_rc_id` int(11) NOT NULL COMMENT 'fk record ',
+  `ts_ac_id` int(11) NOT NULL COMMENT 'fk record ',
   `ts_type_id` int(11) NOT NULL COMMENT 'fk tpye_transaction '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
