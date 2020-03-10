@@ -158,6 +158,7 @@ app.put('/transaction_type_update/:id', (req, res) => {
     })
     //end transaction_type
 
+ // Transaction by Nattamanat
 app.get('/transaction', (req, res) => {
     let sql = 'SELECT * FROM t5w_transaction;'
     let query = db.query(sql, (err, results) => {
