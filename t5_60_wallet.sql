@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 29, 2020 at 12:00 PM
+-- Generation Time: Mar 10, 2020 at 04:01 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -32,32 +32,20 @@ CREATE TABLE `t5w_account` (
   `ac_id` int(11) NOT NULL COMMENT 'pk for account',
   `ac_fname` varchar(255) NOT NULL COMMENT 'frist name user',
   `ac_lname` varchar(255) NOT NULL COMMENT 'last name user',
-  `ac_max_cost` int(11) NOT NULL COMMENT 'max cost'
+  `ac_ursername` varchar(255) DEFAULT NULL COMMENT 'username''account',
+  `ac_password` varchar(255) DEFAULT NULL COMMENT 'password''account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `t5w_account`
 --
 
-INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_max_cost`) VALUES
-(2, '0', '0', 1000),
-(3, '0', '0', 1000),
-(4, '0', '0', 1000),
-(5, 'er', '0', 100044),
-(6, 'test', ' tset', 100044);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `t5w_record`
---
-
-CREATE TABLE `t5w_record` (
-  `rc_id` int(11) NOT NULL COMMENT 'pk for recoed',
-  `rc_balance` int(11) NOT NULL COMMENT 'balane monny',
-  `rc_ac_id` int(11) NOT NULL COMMENT 'fk account',
-  `rc_date` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'date on day for record'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_ursername`, `ac_password`) VALUES
+(2, '0', '0', NULL, NULL),
+(3, '0', '0', NULL, NULL),
+(4, '0', '0', NULL, NULL),
+(5, 'er', '0', NULL, NULL),
+(6, 'test', ' tset', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -98,12 +86,6 @@ ALTER TABLE `t5w_account`
   ADD PRIMARY KEY (`ac_id`);
 
 --
--- Indexes for table `t5w_record`
---
-ALTER TABLE `t5w_record`
-  ADD PRIMARY KEY (`rc_id`);
-
---
 -- Indexes for table `t5w_transaction`
 --
 ALTER TABLE `t5w_transaction`
@@ -124,12 +106,6 @@ ALTER TABLE `t5w_transaction_type`
 --
 ALTER TABLE `t5w_account`
   MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account', AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `t5w_record`
---
-ALTER TABLE `t5w_record`
-  MODIFY `rc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for recoed';
 
 --
 -- AUTO_INCREMENT for table `t5w_transaction`
