@@ -200,15 +200,5 @@ app.put('/transaction_update/:id', (req, res) => {
         })
     })
     //end dev
-// transaction_edit function by thutsaneeya
-app.put('/transaction_edit/:id', (req, res) => {
-    let sql = `SELECT * 
-               FROM t5w_transaction 
-               WHERE ts_id = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err
-            res.json(result)
-        })
-})
-//end transaction_edit function
+
 
