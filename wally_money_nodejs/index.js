@@ -205,4 +205,15 @@ app.put('/transaction_update/:id', (req, res) => {
             res.json(result)
         })
     })
+
+
+    app.put('/get_transaction_by_key/:id', (req, res) => {
+        let sql = ` SELECT * FROM t5w_account LEFT JOIN t5w_transaction ON t5w_account.ac_id = t5w_transaction.ts_ac_id WHERE ac_id = ${req.params.id} LIMIT 5 `;
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
+    })
+
+
     //end dev
