@@ -32,7 +32,8 @@ db.connect((err) => {
 app.listen(3000, () => {
     console.log('Start server at port 3000.');
 });
-// account by Noppadol Chansuk 
+
+// account 
 app.get('/account', (req, res) => {
     let sql = 'SELECT * FROM t5w_account;'
     let query = db.query(sql, (err, results) => {
@@ -42,8 +43,9 @@ app.get('/account', (req, res) => {
 })
 
 app.post('/account_insert/', (req, res) => {
-    let sql = `INSERT INTO t5w_account(ac_fname,ac_lname,ac_max_cost) 
-    VALUES ("${req.body.ac_fname}","${req.body.ac_lname}",${req.body.ac_max_cost});`;
+
+    let sql = `INSERT INTO t5w_account(ac_fname, ac_lname, ac_username, ac_password) 
+    VALUES ("${req.body.ac_fname}","${req.body.ac_lname}","${req.body.ac_username}", "${req.body.ac_password}");`;
 
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -61,34 +63,50 @@ app.delete('/account_delete/:id', (req, res) => {
 
 
 app.put('/account_update/:id', (req, res) => {
-        let sql = `UPDATE t5w_account SET ac_fname = "${req.body.ac_fname}",ac_lname = " ${req.body.ac_lname}",ac_max_cost = ${req.body.ac_max_cost}  WHERE ac_id = ${req.params.id}  ;`;
+
+        let sql = `UPDATE t5w_account SET ac_fname = "${req.body.ac_fname}",ac_lname = "${req.body.ac_lname}", ac_username = "${req.body.ac_username}", ac_password = "${req.body.ac_password}"  WHERE ac_id = ${req.params.id}  ;`;
         let query = db.query(sql, (err, result) => {
             if (err) throw err
             res.json(result)
         })
     })
-    //end dev
 
-// record by Yodsapat
-app.get('/record', (req, res) => {
-    let sql = 'SELECT * FROM t5w_record;'
-    let query = db.query(sql, (err, results) => {
-        if (err) throw err
-        res.json(results)
-    })
-})
 
-app.get('/record/:id', (req, res) => {
-    let sql = `SELECT * FROM t5w_record WHERE rc_id = ${req.params.id};`
+    //end account
+
+
+
+
+ //login
+app.post('/account_login/', (req, res) => {
+    let sql = `select if(ac_username = "${req.body.ac_username}",
+    if(ac_password = "${req.body.ac_password}", true, false), false)
+    from t5w_account 
+    where ac_username = ${req.body.ac_username};`
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
     })
 })
 
-app.post('/record_insert/', (req, res) => {
-    let sql = `INSERT INTO t5w_record(rc_balance, rc_ac_id) 
-    VALUES (${req.body.rc_balance}, ${req.body.rc_ac_id});`;
+//end login
+//register
+app.post('/account_regisCheck/', (req, res) => {
+    let sql = `select if(ac_username = "${req.body.ac_username}", true, false)
+    from t5w_account
+    where ac_username = ${req.body.ac_username};`;
+    
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+}) 
+
+
+
+app.post('/account_regis/', (req, res) => {
+    let sql = `INSERT INTO t5w_account(ac_username, ac_password) 
+    VALUES ("${req.body.ac_username}", "${req.body.ac_password}");`;
 
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -96,23 +114,7 @@ app.post('/record_insert/', (req, res) => {
     })
 })
 
-app.delete('/record_delete/:id', (req, res) => {
-    let sql = `DELETE FROM t5w_record WHERE rc_id = ${req.params.id};`
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err
-        res.json(result)
-    })
-})
-
-
-app.put('/record_update/:id', (req, res) => {
-        let sql = `UPDATE t5w_record SET rc_balance = ${req.body.rc_balance}, rc_ac_id = ${req.body.rc_ac_id}, rc_date = "${new Date().toLocaleString("en-US", {timeZone: "Asia/Shanghai"})}" WHERE rc_id = ${req.params.id}  ;`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
-    })
-    //end dev
+//end register
 
     // Transaction_type by Thutsaneeya
 app.get('/transaction_type', (req, res) => {
@@ -204,4 +206,3 @@ app.put('/transaction_update/:id', (req, res) => {
         })
     })
     //end dev
-
