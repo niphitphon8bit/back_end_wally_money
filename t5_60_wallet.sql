@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2020 at 04:08 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Generation Time: Mar 10, 2020 at 05:14 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,7 +32,7 @@ CREATE TABLE `t5w_account` (
   `ac_id` int(11) NOT NULL COMMENT 'pk for account',
   `ac_fname` varchar(255) NOT NULL COMMENT 'frist name user',
   `ac_lname` varchar(255) NOT NULL COMMENT 'last name user',
-  `ac_ursername` varchar(255) DEFAULT NULL COMMENT 'username''account',
+  `ac_username` varchar(255) DEFAULT NULL COMMENT 'username''account',
   `ac_password` varchar(255) DEFAULT NULL COMMENT 'password''account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,12 +40,13 @@ CREATE TABLE `t5w_account` (
 -- Dumping data for table `t5w_account`
 --
 
-INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_ursername`, `ac_password`) VALUES
+INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_username`, `ac_password`) VALUES
 (2, '0', '0', NULL, NULL),
 (3, '0', '0', NULL, NULL),
 (4, '0', '0', NULL, NULL),
 (5, 'er', '0', NULL, NULL),
-(6, 'test', ' tset', NULL, NULL);
+(6, 'test', ' tset', NULL, NULL),
+(7, 'Yotsapat', 'Phurahong', 'patsuju', 'qwer000');
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,7 @@ ALTER TABLE `t5w_transaction_type`
 -- AUTO_INCREMENT for table `t5w_account`
 --
 ALTER TABLE `t5w_account`
-  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account', AUTO_INCREMENT=7;
+  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `t5w_transaction`
