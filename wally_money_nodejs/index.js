@@ -158,7 +158,7 @@ app.put('/transaction_type_update/:id', (req, res) => {
     })
     //end dev
 
-        // Transaction by Thutsaneeya
+        // Transaction by
 app.get('/transaction', (req, res) => {
     let sql = 'SELECT * FROM t5w_transaction;'
     let query = db.query(sql, (err, results) => {
