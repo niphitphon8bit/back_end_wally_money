@@ -64,21 +64,21 @@ app.delete('/account_delete/:id', (req, res) => {
 
 app.put('/account_update/:id', (req, res) => {
 
-        let sql = `UPDATE t5w_account SET ac_fname = "${req.body.ac_fname}",ac_lname = "${req.body.ac_lname}", ac_username = "${req.body.ac_username}", ac_password = "${req.body.ac_password}"  WHERE ac_id = ${req.params.id}  ;`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+    let sql = `UPDATE t5w_account SET ac_fname = "${req.body.ac_fname}",ac_lname = "${req.body.ac_lname}", ac_username = "${req.body.ac_username}", ac_password = "${req.body.ac_password}"  WHERE ac_id = ${req.params.id}  ;`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
+})
 
 
-    //end account
+//end account
 
 
 
 
- //login
-app.post('/account_login/', (req, res) => {
+//login
+app.get('/account_login/', (req, res) => {
     let sql = `select if(ac_username = "${req.body.ac_username}",
     if(ac_password = "${req.body.ac_password}", true, false), false)
     from t5w_account 
@@ -91,16 +91,16 @@ app.post('/account_login/', (req, res) => {
 
 //end login
 //register
-app.post('/account_regisCheck/', (req, res) => {
+app.get('/account_regisCheck/', (req, res) => {
     let sql = `select if(ac_username = "${req.body.ac_username}", true, false)
     from t5w_account
     where ac_username = ${req.body.ac_username};`;
-    
+
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
     })
-}) 
+})
 
 
 
@@ -116,7 +116,7 @@ app.post('/account_regis/', (req, res) => {
 
 //end register
 
-    // Transaction_type by Thutsaneeya
+// Transaction_type by Thutsaneeya
 app.get('/transaction_type', (req, res) => {
     let sql = 'SELECT * FROM t5w_transaction_type;'
     let query = db.query(sql, (err, results) => {
@@ -150,15 +150,15 @@ app.delete('/transaction_type_delete/:id', (req, res) => {
 })
 
 app.put('/transaction_type_update/:id', (req, res) => {
-        let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+    let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
-    //end transaction_type
+})
+//end transaction_type
 
- // Transaction by Nattamanat
+// Transaction by Nattamanat
 app.get('/transaction', (req, res) => {
     let sql = 'SELECT * FROM t5w_transaction;'
     let query = db.query(sql, (err, results) => {
@@ -190,30 +190,36 @@ app.delete('/transaction_delete/:id', (req, res) => {
     })
 })
 app.put('/transaction_update/:id', (req, res) => {
-        let sql = `UPDATE t5w_transaction SET ts_name = "${req.body.ts_name}",
+    let sql = `UPDATE t5w_transaction SET ts_name = "${req.body.ts_name}",
                                                 ts_cost = ${req.body.ts_cost},
                                                 ts_date = "${req.body.ts_date}",
                                                 ts_detail = "${req.body.ts_detail}",
                                                 ts_category ="${req.body.ts_category}",
                                                 ts_type_id  = ${req.body.ts_type_id},
                                                 ts_ac_id = ${req.body.ts_ac_id} where ts_id = ${req.params.id}`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
+})
 
 
-    app.put('/get_transaction_by_key/:id', (req, res) => {
-        let sql = ` SELECT * FROM t5w_account LEFT JOIN t5w_transaction ON t5w_account.ac_id = t5w_transaction.ts_ac_id WHERE ac_id = ${req.params.id} LIMIT 5 `;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+app.get('/get_transaction_by_key/:id', (req, res) => {
+    let sql = ` SELECT * 
+                FROM t5w_account 
+                LEFT JOIN t5w_transaction 
+                ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
+                WHERE ac_id = ${req.params.id} 
+                ORDER BY 't5w_transaction.ts_date' 
+                DESC LIMIT 5`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
+})
 
 
-    //end dev
+//end dev
 // transaction_edit function by thutsaneeya
 app.put('/transaction_edit/:id', (req, res) => {
     let sql = `SELECT * 
@@ -221,7 +227,7 @@ app.put('/transaction_edit/:id', (req, res) => {
                WHERE ts_id = ${req.params.id}`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
-            res.json(result)
-        })
+        res.json(result)
+    })
 })
 //end transaction_edit function
