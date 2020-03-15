@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 29, 2020 at 12:00 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.1
+-- Generation Time: Mar 10, 2020 at 05:14 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,32 +32,21 @@ CREATE TABLE `t5w_account` (
   `ac_id` int(11) NOT NULL COMMENT 'pk for account',
   `ac_fname` varchar(255) NOT NULL COMMENT 'frist name user',
   `ac_lname` varchar(255) NOT NULL COMMENT 'last name user',
-  `ac_max_cost` int(11) NOT NULL COMMENT 'max cost'
+  `ac_username` varchar(255) DEFAULT NULL COMMENT 'username''account',
+  `ac_password` varchar(255) DEFAULT NULL COMMENT 'password''account'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `t5w_account`
 --
 
-INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_max_cost`) VALUES
-(2, '0', '0', 1000),
-(3, '0', '0', 1000),
-(4, '0', '0', 1000),
-(5, 'er', '0', 100044),
-(6, 'test', ' tset', 100044);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `t5w_record`
---
-
-CREATE TABLE `t5w_record` (
-  `rc_id` int(11) NOT NULL COMMENT 'pk for recoed',
-  `rc_balance` int(11) NOT NULL COMMENT 'balane monny',
-  `rc_ac_id` int(11) NOT NULL COMMENT 'fk account',
-  `rc_date` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'date on day for record'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t5w_account` (`ac_id`, `ac_fname`, `ac_lname`, `ac_username`, `ac_password`) VALUES
+(2, '0', '0', NULL, NULL),
+(3, '0', '0', NULL, NULL),
+(4, '0', '0', NULL, NULL),
+(5, 'er', '0', NULL, NULL),
+(6, 'test', ' tset', NULL, NULL),
+(7, 'Yotsapat', 'Phurahong', 'patsuju', 'qwer000');
 
 -- --------------------------------------------------------
 
@@ -72,7 +61,7 @@ CREATE TABLE `t5w_transaction` (
   `ts_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp() COMMENT 'date on day for transaction ',
   `ts_detail` varchar(255) NOT NULL COMMENT 'transaction  detail',
   `ts_category` varchar(2) NOT NULL COMMENT 'transaction  category',
-  `ts_rc_id` int(11) NOT NULL COMMENT 'fk record ',
+  `ts_ac_id` int(11) NOT NULL COMMENT 'fk record ',
   `ts_type_id` int(11) NOT NULL COMMENT 'fk tpye_transaction '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -98,12 +87,6 @@ ALTER TABLE `t5w_account`
   ADD PRIMARY KEY (`ac_id`);
 
 --
--- Indexes for table `t5w_record`
---
-ALTER TABLE `t5w_record`
-  ADD PRIMARY KEY (`rc_id`);
-
---
 -- Indexes for table `t5w_transaction`
 --
 ALTER TABLE `t5w_transaction`
@@ -123,13 +106,7 @@ ALTER TABLE `t5w_transaction_type`
 -- AUTO_INCREMENT for table `t5w_account`
 --
 ALTER TABLE `t5w_account`
-  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account', AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `t5w_record`
---
-ALTER TABLE `t5w_record`
-  MODIFY `rc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for recoed';
+  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pk for account', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `t5w_transaction`
