@@ -235,7 +235,7 @@ WHERE ts_ac_id = ${req.body.ts_ac_id} AND ts_date BETWEEN  '${req.body.ts_date_s
 })
 
 // transaction_get_history_between_date_by
-app.get('/get_transaction_this_month/', (req, res) => {
+app.post('/get_transaction_this_month/', (req, res) => {
     let sql = `SELECT * FROM t5w_transaction
     WHERE ts_ac_id =  ${req.body.ts_ac_id}  AND MONTH(ts_date) ="${req.body.ts_month}"`;
     let query = db.query(sql, (err, result) => {
@@ -243,7 +243,7 @@ app.get('/get_transaction_this_month/', (req, res) => {
         res.json(result)
     })
 })
-app.get('/get_transaction_this_day/', (req, res) => {
+app.post('/get_transaction_this_day/', (req, res) => {
     let sql = `SELECT * FROM t5w_transaction
     WHERE ts_ac_id =  ${req.body.ts_ac_id}  AND DAY(ts_date) ="${req.body.ts_day}"`;
     let query = db.query(sql, (err, result) => {
