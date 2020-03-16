@@ -94,7 +94,7 @@ app.get('/account_login/', (req, res) => {
 app.get('/account_regisCheck/', (req, res) => {
     let sql = `select if(ac_username = "${req.body.ac_username}", true, false)
     from t5w_account
-    where ac_username = ${req.body.ac_username};`;
+    where ac_username = '${req.body.ac_username}';`;
 
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -204,20 +204,51 @@ app.put('/transaction_update/:id', (req, res) => {
 })
 
 
-app.get('/get_transaction_by_key/:id', (req, res) => {
-    let sql = ` SELECT * 
-                FROM t5w_account 
-                LEFT JOIN t5w_transaction 
-                ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
-                WHERE ac_id = ${req.params.id} 
-                ORDER BY 't5w_transaction.ts_date' 
-                DESC LIMIT 5`;
+
+app.put('/get_transaction_by_key/:id', (req, res) => {
+    let sql = ` SELECT * FROM t5w_account LEFT JOIN t5w_transaction ON t5w_account.ac_id = t5w_transaction.ts_ac_id WHERE ac_id = ${req.params.id} LIMIT 5 `;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
     })
 })
 
+// account_get_history
+app.get('/account_get_history/', (req, res) => {
+        let sql = `SELECT * , SUM(if(ts_category = 'R',1,0))  FROM t5w_transaction
+    WHERE ts_ac_id = ${req.body.ts_ac_id} AND MONTH(ts_date) ="${req.body.ts_month}" AND YEAR(ts_date)  ="${req.body.ts_year}"`;
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
+    })
+    // transaction_get_history_between_date_by
+app.get('/transaction_get_history_between_date_by_account_key/', (req, res) => {
+    let sql = `SELECT * FROM t5w_transaction
+WHERE ts_ac_id = ${req.body.ts_ac_id} AND ts_date BETWEEN  '${req.body.ts_date_start}' AND '${req.body.ts_date_end}'`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+// transaction_get_history_between_date_by
+app.get('/get_transaction_this_month/', (req, res) => {
+    let sql = `SELECT * FROM t5w_transaction
+    WHERE ts_ac_id =  ${req.body.ts_ac_id}  AND MONTH(ts_date) ="${req.body.ts_month}"`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+app.get('/get_transaction_this_day/', (req, res) => {
+    let sql = `SELECT * FROM t5w_transaction
+    WHERE ts_ac_id =  ${req.body.ts_ac_id}  AND DAY(ts_date) ="${req.body.ts_day}"`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
 
 //end dev
 // transaction_edit function by thutsaneeya
