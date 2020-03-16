@@ -78,11 +78,9 @@ app.put('/account_update/:id', (req, res) => {
 
 
 //login
-app.get('/account_login/', (req, res) => {
-    let sql = `select if(ac_username = "${req.body.ac_username}",
-    if(ac_password = "${req.body.ac_password}", true, false), false)
-    from t5w_account 
-    where ac_username = ${req.body.ac_username};`
+app.get('/get_account_login/', (req, res) => {
+    let sql = `SELECT * FROM t5w_acount
+    WHERE ac_username =  ${req.body.ac_username}  AND ac_password ="${req.body.ac_password}"`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
@@ -90,9 +88,10 @@ app.get('/account_login/', (req, res) => {
 })
 
 //end login
+
 //register
 app.get('/account_regisCheck/', (req, res) => {
-    let sql = `select if(ac_username = "${req.body.ac_username}", true, false)
+    let sql = `select *
     from t5w_account
     where ac_username = '${req.body.ac_username}';`;
 
@@ -101,7 +100,6 @@ app.get('/account_regisCheck/', (req, res) => {
         res.json(result)
     })
 })
-
 
 
 app.post('/account_regis/', (req, res) => {
