@@ -64,7 +64,7 @@ app.delete('/account_delete/:id', (req, res) => {
 
 app.put('/account_update/:id', (req, res) => {
 
-    let sql = `UPDATE t5w_account SET ac_fname = "${req.body.ac_fname}",ac_lname = "${req.body.ac_lname}", ac_username = "${req.body.ac_username}", ac_password = "${req.body.ac_password}"  WHERE ac_id = ${req.params.id}  ;`;
+    let sql = `UPDATE t5w_account SET ac_fname = "${req.body.ac_fname}",ac_lname = "${req.body.ac_lname}"  WHERE ac_id = ${req.params.id}  ;`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
