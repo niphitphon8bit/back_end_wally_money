@@ -202,13 +202,13 @@ app.put('/transaction_update/:id', (req, res) => {
 })
 
 
-app.get('/get_five_transaction_by_ac_id/:id', (req, res) => {
+app.get('/get_ten_transaction_by_ac_id/:id', (req, res) => {
     let sql = ` SELECT * 
     FROM t5w_account 
     LEFT JOIN t5w_transaction 
     ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
     WHERE ac_id = ${req.params.id} 
-    ORDER BY  t5w_transaction.ts_date DESC  LIMIT 5`;
+    ORDER BY  t5w_transaction.ts_date DESC  LIMIT 10`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
@@ -222,6 +222,30 @@ app.get('/get_all_transaction_by_ac_id/:id', (req, res) => {
     ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
     WHERE ac_id = ${req.params.id} 
     ORDER BY  t5w_transaction.ts_date DESC`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+app.get('/get_sum_revenue_by_ac_id/:id', (req, res) => {
+    let sql = `SELECT SUM(ts_cost) as balance
+    FROM t5w_account 
+    LEFT JOIN t5w_transaction 
+    ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
+    WHERE ac_id = ${req.params.id}  AND ts_category = "R"`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
+app.get('/get_sum_expend_by_ac_id/:id', (req, res) => {
+    let sql = `SELECT SUM(ts_cost) as balance
+    FROM t5w_account 
+    LEFT JOIN t5w_transaction 
+    ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
+    WHERE ac_id = ${req.params.id}  AND ts_category = "E"`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
