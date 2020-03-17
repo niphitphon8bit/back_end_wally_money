@@ -265,14 +265,24 @@ app.get('/get_year_month_history_by_ac_id/:id', (req, res) => {
 })
 
 // account_get_history
-app.get('/account_get_history/', (req, res) => {
-    let sql = `SELECT * , SUM(if(ts_category = 'R',1,0)),SUM(if(ts_category = 'E',1,0))  FROM t5w_transaction
-    WHERE ts_ac_id = ${req.body.ts_ac_id} AND MONTH(ts_date) ="${req.body.ts_month}" AND YEAR(ts_date)  ="${req.body.ts_year}"`;
+app.get('/account_get_history/:ts_ac_id/:ts_year/:ts_month', (req, res) => {
+    let sql = `SELECT * , SUM(if(ts_category = 'R',1,0)) as R,SUM(if(ts_category = 'E',1,0)) as E FROM t5w_transaction
+    WHERE ts_ac_id = ${req.params.ts_ac_id} AND MONTH(ts_date) ="${req.params.ts_month}" AND YEAR(ts_date)  ="${req.params.ts_year}"`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
     })
 })
+
+app.get('/account_get_history_transaction_type/:ts_ac_id/:ts_year/:ts_month', (req, res) => {
+    let sql = `SELECT * , SUM(if(ts_type_id = '1',1,0)) as entertain ,SUM(if(ts_type_id = '2',1,0)) as general, SUM(if(ts_type_id = '3',1,0)) as food FROM t5w_transaction
+    WHERE ts_ac_id = ${req.params.ts_ac_id} AND MONTH(ts_date) ="${req.params.ts_month}" AND YEAR(ts_date)  ="${req.params.ts_year}"`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
 // transaction_get_history_between_date_by
 app.post('/transaction_get_history_between_date_by_account_key/', (req, res) => {
     let sql = `SELECT * FROM t5w_transaction WHERE ts_ac_id = '${req.body.ts_ac_id}' AND DATE(ts_date) BETWEEN '${req.body.ts_date_start}' AND '${req.body.ts_date_end}' ORDER BY ts_date DESC;`;
