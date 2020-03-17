@@ -78,8 +78,8 @@ app.put('/account_update/:id', (req, res) => {
 
 
 //login
-app.get('/get_account_login/', (req, res) => {
-    let sql = `SELECT * FROM t5w_acount
+app.post('/get_account_login/', (req, res) => {
+    let sql = `SELECT * FROM t5w_account
     WHERE ac_username =  ${req.body.ac_username}  AND ac_password ="${req.body.ac_password}"`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -90,10 +90,10 @@ app.get('/get_account_login/', (req, res) => {
 //end login
 
 //register
-app.get('/account_regisCheck/', (req, res) => {
+app.post('/account_regisCheck/', (req, res) => {
     let sql = `select *
     from t5w_account
-    where ac_username = '${req.body.ac_username}';`;
+    where ac_username = "${req.body.ac_username}";`;
 
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -148,13 +148,13 @@ app.delete('/transaction_type_delete/:id', (req, res) => {
 })
 
 app.put('/transaction_type_update/:id', (req, res) => {
-    let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err
-        res.json(result)
+        let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
     })
-})
-//end transaction_type
+    //end transaction_type
 
 // Transaction by Nattamanat
 app.get('/transaction', (req, res) => {
@@ -202,7 +202,7 @@ app.put('/transaction_update/:id', (req, res) => {
 })
 
 
-app.get('/get_transaction_by_key/:id', (req, res) => {
+app.get('/get_five_transaction_by_ac_id/:id', (req, res) => {
     let sql = ` SELECT * 
     FROM t5w_account 
     LEFT JOIN t5w_transaction 
@@ -215,9 +215,22 @@ app.get('/get_transaction_by_key/:id', (req, res) => {
     })
 })
 
+app.get('/get_all_transaction_by_ac_id/:id', (req, res) => {
+    let sql = ` SELECT * 
+    FROM t5w_account 
+    LEFT JOIN t5w_transaction 
+    ON t5w_account.ac_id = t5w_transaction.ts_ac_id 
+    WHERE ac_id = ${req.params.id} 
+    ORDER BY  t5w_transaction.ts_date DESC`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
+
 // account_get_history
 app.get('/account_get_history/', (req, res) => {
-        let sql = `SELECT * , SUM(if(ts_category = 'R',1,0))  FROM t5w_transaction
+        let sql = `SELECT * , SUM(if(ts_category = 'R',1,0)),SUM(if(ts_category = 'E',1,0))  FROM t5w_transaction
     WHERE ts_ac_id = ${req.body.ts_ac_id} AND MONTH(ts_date) ="${req.body.ts_month}" AND YEAR(ts_date)  ="${req.body.ts_year}"`;
         let query = db.query(sql, (err, result) => {
             if (err) throw err
@@ -256,12 +269,12 @@ app.post('/get_transaction_this_day/', (req, res) => {
 //end dev
 // transaction_edit function by thutsaneeya
 app.put('/transaction_edit/:id', (req, res) => {
-    let sql = `SELECT * 
+        let sql = `SELECT * 
                FROM t5w_transaction 
                WHERE ts_id = ${req.params.id}`;
-    let query = db.query(sql, (err, result) => {
-        if (err) throw err
-        res.json(result)
+        let query = db.query(sql, (err, result) => {
+            if (err) throw err
+            res.json(result)
+        })
     })
-})
-//end transaction_edit function
+    //end transaction_edit function

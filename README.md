@@ -24,4 +24,4 @@ node.js
 4. ติดตั้ง mysql
  - npm install mysql --save
 5. จากนั้นทำการ run โดยใช้คำสั่ง
- - nodemon ./
+ - nodemon ./index.js
