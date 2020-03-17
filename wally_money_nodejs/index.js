@@ -80,7 +80,7 @@ app.put('/account_update/:id', (req, res) => {
 //login
 app.post('/get_account_login/', (req, res) => {
     let sql = `SELECT * FROM t5w_account
-    WHERE ac_username =  ${req.body.ac_username}  AND ac_password ="${req.body.ac_password}"`;
+    WHERE ac_username =  "${req.body.ac_username}"  AND ac_password ="${req.body.ac_password}"`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
