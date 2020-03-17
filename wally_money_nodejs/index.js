@@ -148,13 +148,13 @@ app.delete('/transaction_type_delete/:id', (req, res) => {
 })
 
 app.put('/transaction_type_update/:id', (req, res) => {
-        let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+    let sql = `UPDATE t5w_transaction_type SET type_name = "${req.body.type_name}" where type_id = ${req.params.id}`;
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
-    //end transaction_type
+})
+//end transaction_type
 
 // Transaction by Nattamanat
 app.get('/transaction', (req, res) => {
@@ -230,17 +230,16 @@ app.get('/get_all_transaction_by_ac_id/:id', (req, res) => {
 
 // account_get_history
 app.get('/account_get_history/', (req, res) => {
-        let sql = `SELECT * , SUM(if(ts_category = 'R',1,0)),SUM(if(ts_category = 'E',1,0))  FROM t5w_transaction
+    let sql = `SELECT * , SUM(if(ts_category = 'R',1,0)),SUM(if(ts_category = 'E',1,0))  FROM t5w_transaction
     WHERE ts_ac_id = ${req.body.ts_ac_id} AND MONTH(ts_date) ="${req.body.ts_month}" AND YEAR(ts_date)  ="${req.body.ts_year}"`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
-    // transaction_get_history_between_date_by
-app.get('/transaction_get_history_between_date_by_account_key/', (req, res) => {
-    let sql = `SELECT * FROM t5w_transaction
-WHERE ts_ac_id = ${req.body.ts_ac_id} AND ts_date BETWEEN  '${req.body.ts_date_start}' AND '${req.body.ts_date_end}'`;
+})
+// transaction_get_history_between_date_by
+app.post('/transaction_get_history_between_date_by_account_key/', (req, res) => {
+    let sql = `SELECT * FROM t5w_transaction WHERE ts_ac_id = '${req.body.ts_ac_id}' AND DATE(ts_date) BETWEEN '${req.body.ts_date_start}' AND '${req.body.ts_date_end}' ORDER BY ts_date DESC;`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
@@ -259,7 +258,8 @@ app.post('/get_transaction_this_month/', (req, res) => {
 })
 app.post('/get_transaction_this_day/', (req, res) => {
     let sql = `SELECT * FROM t5w_transaction
-    WHERE ts_ac_id =  ${req.body.ts_ac_id}  AND DAY(ts_date) ="${req.body.ts_day}"`;
+    WHERE ts_ac_id =  ${req.body.ts_ac_id}  AND DAY(ts_date) ="${req.body.ts_day}"
+    ORDER BY  t5w_transaction.ts_date DESC`;
     let query = db.query(sql, (err, result) => {
         if (err) throw err
         res.json(result)
@@ -269,12 +269,12 @@ app.post('/get_transaction_this_day/', (req, res) => {
 //end dev
 // transaction_edit function by thutsaneeya
 app.put('/transaction_edit/:id', (req, res) => {
-        let sql = `SELECT * 
+    let sql = `SELECT * 
                FROM t5w_transaction 
                WHERE ts_id = ${req.params.id}`;
-        let query = db.query(sql, (err, result) => {
-            if (err) throw err
-            res.json(result)
-        })
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
     })
+})
     //end transaction_edit function
