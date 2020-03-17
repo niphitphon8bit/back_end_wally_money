@@ -251,6 +251,18 @@ app.get('/get_sum_expend_by_ac_id/:id', (req, res) => {
         res.json(result)
     })
 })
+app.get('/get_year_month_history_by_ac_id/:id', (req, res) => {
+    let sql = ` SELECT DISTINCT YEAR(ts_date) as year, MONTH(ts_date) as month 
+                FROM t5w_transaction
+                LEFT JOIN t5w_account 
+                ON t5w_account.ac_id = t5w_transaction.ts_ac_id  
+                WHERE t5w_transaction.ts_ac_id = ${req.params.id}
+                GROUP BY ts_date DESC`
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err
+        res.json(result)
+    })
+})
 
 // account_get_history
 app.get('/account_get_history/', (req, res) => {
