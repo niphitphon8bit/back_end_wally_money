@@ -44,8 +44,8 @@ app.get('/account', (req, res) => {
 
 app.post('/account_insert/', (req, res) => {
 
-    let sql = `INSERT INTO t5w_account(ac_fname, ac_lname, ac_username, ac_password) 
-    VALUES ("${req.body.ac_fname}","${req.body.ac_lname}","${req.body.ac_username}", "${req.body.ac_password}");`;
+    let sql = `INSERT INTO t5w_account( ac_username, ac_password) 
+    VALUES ("${req.body.ac_username}", "${req.body.ac_password}");`;
 
     let query = db.query(sql, (err, result) => {
         if (err) throw err
@@ -103,8 +103,8 @@ app.post('/account_regisCheck/', (req, res) => {
 
 
 app.post('/account_regis/', (req, res) => {
-    let sql = `INSERT INTO t5w_account(ac_username, ac_password) 
-    VALUES ("${req.body.ac_username}", "${req.body.ac_password}");`;
+    let sql = `INSERT INTO t5w_account(ac_username, ac_password,ac_fname,ac_lname) 
+    VALUES ("${req.body.ac_username}", "${req.body.ac_password}","${req.body.ac_fname}","${req.body.lname}");`;
 
     let query = db.query(sql, (err, result) => {
         if (err) throw err
